@@ -263,7 +263,8 @@ const ProcessManager = (function () {
         const cIndex = (i + 1) % locCartesian.length;
         const dIndex = (i + 2) % locCartesian.length;
 
-        DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
+        // DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
+        DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32);
       }
 
       for (let i = 0; i < locMap.length; i++) {
