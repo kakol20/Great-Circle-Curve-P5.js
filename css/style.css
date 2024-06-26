@@ -1,0 +1,94 @@
+@font-face {
+	font-family: 'Open Sans';
+	src: url('opensans-regular-webfont.woff2') format('woff2'), url('opensans-regular-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background-color: rgb(28, 28, 28);
+	color: white;
+	font-family: 'Open Sans';
+	vertical-align: middle;
+}
+
+canvas {
+	display: block;
+}
+
+button {
+	border-width: 1px;
+	border-color: white;
+	border-style: outset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
+
+input:not(#upload) {
+	border-width: 1px;
+	border-color: white;
+	border-style: outset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
+
+select {
+	border-width: 1px;
+	border-color: white;
+	border-style: outset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
+
+button:hover,
+button:focus {
+	border-width: 1px;
+	border-color: white;
+	border-style: inset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
+
+input[type=file]::file-selector-button {
+	border-width: 1px;
+	border-color: white;
+	border-style: outset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
+
+input[type=file]::file-selector-button:hover,
+input[type=file]::file-selector-button:focus {
+	border-width: 1px;
+	border-color: white;
+	border-style: inset;
+	border-radius: 3px;
+	position: relative;
+	width: auto;
+	height: auto;
+	flex: none;
+	vertical-align: middle;
+}
