@@ -61,6 +61,17 @@ const ProcessManager = (function () {
     return { x: x, y: y, z: z };
   }
 
+  function MapToSpherical(c) {
+    let x = ((Math.PI * 2 * c.x) / width) - Math.PI;
+    let y = height - c.y;
+    y = (Math.PI * 2 * (y - (height / 2))) / height;
+
+    y = (2 * Math.atan(Math.pow(Math.E, y))) - (Math.PI / 2);
+
+    // const mercator = { x: x, y: y };
+    return { lon: x, lat: y }
+  }
+
   // ----- DRAWING FUNCTIONS -----
 
   function DrawVertices(vertices = []) {
@@ -206,19 +217,16 @@ const ProcessManager = (function () {
       lon: -63.1134 * DegToRad
     }
   ];
-  console.log('Spherical Coordinates', locSpherical);
 
   let locCartesian = [];
   for (let i = 0; i < locSpherical.length; i++) {
     locCartesian.push(SphericalToCartesian(locSpherical[i]));
   }
-  console.log('Cartesian Coordinates', locCartesian);
 
   let locMercator = [];
   for (let i = 0; i < locSpherical.length; i++) {
     locMercator.push(SphericalToMercator(locSpherical[i]));
   }
-  console.log('Mercator Projection Coordinates', locMercator);
 
   let locMap = [];
 
@@ -239,40 +247,63 @@ const ProcessManager = (function () {
       for (let i = 0; i < locMercator.length; i++) {
         locMap.push(MercatorToMap(locMercator[i]));
       }
-      console.log('Image Map Coordinates', locMap);
+      // console.log('Image Map Coordinates', locMap);
     },
 
     draw(dt) {
-      // switch (state) {
-      //   default:
-      //     // do nothing
-      //     break;
-      // }
-
       background(0);
 
       image(earthMap, 0, 0);
 
-      // DrawPathLerp(locCartesian[0], locCartesian[1], 20);
-      // for (let i = 0; i < locCartesian.length ; i++) {
-      //   DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32);
-      // }
-      for (let i = 0; i < locCartesian.length; i++) {
-        const aIndex = (((i - 1) % locCartesian.length) + locCartesian.length) % locCartesian.length;
-        const bIndex = i;
-        const cIndex = (i + 1) % locCartesian.length;
-        const dIndex = (i + 2) % locCartesian.length;
+      const loop = DOMManager.loopCheckbox.checked();
+      const offset = loop ? 0 : 1;
+      for (let i = 0; i < locCartesian.length - offset; i++) {
+        let aIndex = (((i - 1) % locCartesian.length) + locCartesian.length) % locCartesian.length;
+        let bIndex = i;
+        let cIndex = loop ? (i + 1) % locCartesian.length : i + 1;
+        let dIndex = loop ? (i + 2) % locCartesian.length : i + 2;
+
+        aIndex = loop ? aIndex : Math.max(0, aIndex);
+        cIndex = loop ? cIndex : Math.min(locCartesian.length - 1, cIndex);
+        dIndex = loop ? dIndex : Math.min(locCartesian.length - 1, dIndex);
 
         if (DOMManager.cubicCheckbox.checked()) {
-          DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
+          DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32, 1.5);
         } else {
-          DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32);
+          DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32, 1.5);
         }
       }
 
       for (let i = 0; i < locMap.length; i++) {
         DrawMapPoint(locMap[i]);
       }
+    },
+
+    mousePressed() {
+      console.log('Mouse Pos', mouseX, mouseY);
+      console.log('DOM Pressed', DOMManager.domPressed);
+
+      if (!DOMManager.domPressed && mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
+        const mouseSpherical = MapToSpherical({ x: mouseX, y: mouseY });
+        console.log(mouseSpherical);
+
+        locSpherical.push(mouseSpherical);
+
+        const cartesian = SphericalToCartesian(mouseSpherical);
+        locCartesian.push(cartesian);
+
+        const mercator = SphericalToMercator(mouseSpherical)
+        locMercator.push(mercator);
+
+        locMap.push({ x: mouseX, y: mouseY });
+      }
+    },
+
+    reset() {
+      locSpherical.length = 0;
+      locCartesian.length = 0;
+      locMercator.length = 0;
+      locMap.length = 0;
     }
   }
 })()
