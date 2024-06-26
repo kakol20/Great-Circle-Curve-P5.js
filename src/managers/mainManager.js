@@ -21,6 +21,7 @@ const MainManager = (function () {
       this.canvas = createCanvas(mapWidth, mapHeight);
       this.canvas.position(0, 0);
 
+      DOMManager.setup();
       ProcessManager.setup();
     },
 
