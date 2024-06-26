@@ -1,6 +1,11 @@
 const ProcessManager = (function () {
   // ----- FUNCTIONS -----
 
+  // https://www.desmos.com/calculator/jhmsnutnai
+  function CubicInterpolate(a, b, c, d, t) {
+    return b + 0.5 * t * (c - a + t * (2 * a - 5 * b + 4 * c - d + t * (3 * (b - c) + d - a)));
+  }
+
   // Spherical Coordinates to Cartesian Coordinates
   function SphericalToCartesian(c) {
     const x = Math.cos(c.lat) * Math.cos(c.lon);
@@ -48,26 +53,17 @@ const ProcessManager = (function () {
     return { x: x, y: y, z: z };
   }
 
+  function CartesionCubic(a, b, c, d, t) {
+    const x = CubicInterpolate(a.x, b.x, c.x, d.x, t);
+    const y = CubicInterpolate(a.y, b.y, c.y, d.y, t);
+    const z = CubicInterpolate(a.z, b.z, c.z, d.z, t);
+
+    return { x: x, y: y, z: z };
+  }
+
   // ----- DRAWING FUNCTIONS -----
 
-  // a & b in cartesian coordinates
-  function DrawPathLerp(a, b, segments = 10, lineWidth = 2) {
-    noFill();
-    strokeWeight(3);
-    stroke(0, 255);
-    strokeWeight(lineWidth);
-
-    let vertices = [];
-    for (let i = 0; i <= segments; i++) {
-      const t = i / segments;
-
-      const cartesianPoint = CartesianLerp(a, b, t);
-      const mapPoint = CartesianToMap(cartesianPoint);
-
-      // vertex(mapPoint.x, mapPoint.y);
-      vertices.push(mapPoint);
-    }
-
+  function DrawVertices(vertices = []) {
     beginShape();
 
     for (let i = 0; i < vertices.length; i++) {
@@ -93,6 +89,47 @@ const ProcessManager = (function () {
       }
     }
     endShape();
+  }
+
+  // a & b in cartesian coordinates
+  function DrawPathLerp(a, b, segments = 10, lineWidth = 2) {
+    noFill();
+    strokeWeight(3);
+    stroke(0, 255);
+    strokeWeight(lineWidth);
+
+    let vertices = [];
+    for (let i = 0; i <= segments; i++) {
+      const t = i / segments;
+
+      const cartesianPoint = CartesianLerp(a, b, t);
+      const mapPoint = CartesianToMap(cartesianPoint);
+
+      // vertex(mapPoint.x, mapPoint.y);
+      vertices.push(mapPoint);
+    }
+
+    DrawVertices(vertices);
+  }
+
+  function DrawPathCubic(a, b, c, d, segments = 10, lineWidth = 2) {
+    noFill();
+    strokeWeight(3);
+    stroke(0, 255);
+    strokeWeight(lineWidth);
+
+    let vertices = [];
+    for (let i = 0; i <= segments; i++) {
+      const t = i / segments;
+
+      const cartesianPoint = CartesionCubic(a, b, c, d, t);
+      const mapPoint = CartesianToMap(cartesianPoint);
+
+      // vertex(mapPoint.x, mapPoint.y);
+      vertices.push(mapPoint);
+    }
+
+    DrawVertices(vertices);
   }
 
   function DrawMapPoint(c, shade = 255) {
@@ -217,8 +254,16 @@ const ProcessManager = (function () {
       image(earthMap, 0, 0);
 
       // DrawPathLerp(locCartesian[0], locCartesian[1], 20);
-      for (let i = 0; i < locCartesian.length ; i++) {
-        DrawPathLerp(locCartesian[i], locCartesian[(i + 1) % locCartesian.length], 32);
+      // for (let i = 0; i < locCartesian.length ; i++) {
+      //   DrawPathLerp(locCartesian[i], locCartesian[(i + 1) % locCartesian.length], 32);
+      // }
+      for (let i = 0; i < locCartesian.length; i++) {
+        const aIndex = (((i - 1) % locCartesian.length) + locCartesian.length) % locCartesian.length;
+        const bIndex = i;
+        const cIndex = (i + 1) % locCartesian.length;
+        const dIndex = (i + 2) % locCartesian.length;
+
+        DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
       }
 
       for (let i = 0; i < locMap.length; i++) {
