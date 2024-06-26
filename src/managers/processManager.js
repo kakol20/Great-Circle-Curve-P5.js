@@ -48,8 +48,10 @@ const ProcessManager = (function () {
     return { x: x, y: y, z: z };
   }
 
+  // ----- DRAWING FUNCTIONS -----
+
   // a & b in cartesian coordinates
-  function DrawPathLerp(a, b, segments = 10, lineWidth = 2.5) {
+  function DrawPathLerp(a, b, segments = 10, lineWidth = 2) {
     noFill();
     strokeWeight(3);
     stroke(0, 255);
@@ -72,10 +74,17 @@ const ProcessManager = (function () {
       if (i > 0) {
         // X Axis wrap around
         if (Math.abs(vertices[i].x - vertices[i - 1].x) > width / 2) {
-          vertex(vertices[i].x - width, vertices[i].y);
-          endShape();
-          beginShape();
-          vertex(vertices[i - 1].x + width, vertices[i - 1].y);
+          if (vertices[i].x > width / 2) {
+            vertex(vertices[i].x - width, vertices[i].y);
+            endShape();
+            beginShape();
+            vertex(vertices[i - 1].x + width, vertices[i - 1].y);
+          } else {
+            vertex(vertices[i].x + width, vertices[i].y);
+            endShape();
+            beginShape();
+            vertex(vertices[i - 1].x - width, vertices[i - 1].y);
+          }
         } else {
           vertex(vertices[i].x, vertices[i].y);
         }
@@ -86,13 +95,13 @@ const ProcessManager = (function () {
     endShape();
   }
 
-  function DrawMapPoint(c) {
+  function DrawMapPoint(c, shade = 255) {
     ellipseMode(CENTER);
-    fill(255, 128);
+    fill(shade, 255);
     stroke(0, 255);
     strokeWeight(1);
 
-    circle(c.x, c.y, 10);
+    circle(c.x, c.y, 5);
   }
 
   // ----- VARIABLES -----
@@ -108,44 +117,57 @@ const ProcessManager = (function () {
   let earthMap = 0;
 
   // lat = y axis, lon = x axis
-  // let locSpherical = [
-  //   {
-  //     // Innsbruck
-  //     lat: 47.2576 * DegToRad,
-  //     lon: 11.3513 * DegToRad
-  //   },
-  //   {
-  //     // Bari
-  //     lat: 41.1375 * DegToRad,
-  //     lon: 16.7652 * DegToRad
-  //   },
-  //   {
-  //     // Prague
-  //     lat: 50.1018 * DegToRad,
-  //     lon: 14.2632 * DegToRad
-  //   },
-  //   {
-  //     // Heathrow
-  //     lat: 51.4680 * DegToRad,
-  //     lon: -0.4551 * DegToRad
-  //   },
-  // ];
   let locSpherical = [
+    {
+      // London Heathrow
+      lat: 51.4680 * DegToRad,
+      lon: -0.4551 * DegToRad
+    },
+    {
+      // Leipzig
+      lat: 51.4187 * DegToRad,
+      lon: 12.2342 * DegToRad
+    },
     {
       // Prague
       lat: 50.1018 * DegToRad,
       lon: 14.2632 * DegToRad
     },
     {
-      // Sydney
-      lat: -33.9500 * DegToRad,
-      lon: 151.1817 * DegToRad
+      // Innsbruck
+      lat: 47.2576 * DegToRad,
+      lon: 11.3513 * DegToRad
     },
     {
-      // Anchorage
-      lat: 61.1769 * DegToRad,
-      lon: -149.9906 * DegToRad
+      // Bari
+      lat: 41.1375 * DegToRad,
+      lon: 16.7652 * DegToRad
     },
+    {
+      // Muscat
+      lat: 23.6013 * DegToRad,
+      lon: 58.2886 * DegToRad
+    },
+    {
+      // Nagoya
+      lat: 34.8588 * DegToRad,
+      lon: 136.8115 * DegToRad
+    },
+    {
+      // San Diego
+      lat: 32.7332 * DegToRad,
+      lon: -117.1897 * DegToRad
+    },
+    {
+      // Washington
+      lat: 38.9523 * DegToRad,
+      lon: -77.4586 * DegToRad
+    },
+    {
+      // Sint Maarten
+      lat: 18.0442 * DegToRad,
+      lon: -63.1134 * DegToRad
+    }
   ];
   console.log('Spherical Coordinates', locSpherical);
 
