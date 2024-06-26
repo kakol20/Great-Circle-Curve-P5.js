@@ -255,7 +255,7 @@ const ProcessManager = (function () {
 
       // DrawPathLerp(locCartesian[0], locCartesian[1], 20);
       // for (let i = 0; i < locCartesian.length ; i++) {
-      //   DrawPathLerp(locCartesian[i], locCartesian[(i + 1) % locCartesian.length], 32);
+      //   DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32);
       // }
       for (let i = 0; i < locCartesian.length; i++) {
         const aIndex = (((i - 1) % locCartesian.length) + locCartesian.length) % locCartesian.length;
@@ -263,7 +263,11 @@ const ProcessManager = (function () {
         const cIndex = (i + 1) % locCartesian.length;
         const dIndex = (i + 2) % locCartesian.length;
 
-        DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
+        if (DOMManager.cubicCheckbox.checked()) {
+          DrawPathCubic(locCartesian[aIndex], locCartesian[bIndex], locCartesian[cIndex], locCartesian[dIndex], 32);
+        } else {
+          DrawPathLerp(locCartesian[bIndex], locCartesian[cIndex], 32);
+        }
       }
 
       for (let i = 0; i < locMap.length; i++) {
