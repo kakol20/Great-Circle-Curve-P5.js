@@ -5,6 +5,8 @@ const ProcessManager = (function () {
 
   const debugStates = true;
 
+  let earthMap = 0;
+
   return {
     changeState(s) {
       state = s;
@@ -12,16 +14,25 @@ const ProcessManager = (function () {
       if (debugStates) console.log('State Change: ' + s);
     },
 
-    setup() {
+    preload() {
+      earthMap = loadImage('assets/earth.png');
+    },
 
+    setup() {
+      
+      earthMap.resize(width, height);
     },
 
     draw(dt) {
-      switch (state) {
-        default:
-          // do nothing
-          break;
-      }
+      // switch (state) {
+      //   default:
+      //     // do nothing
+      //     break;
+      // }
+
+      background(0);
+
+      image(earthMap, 0, 0);
     }
   }
 })()
