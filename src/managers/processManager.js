@@ -279,7 +279,7 @@ const ProcessManager = (function () {
       }
     },
 
-    mousePressed() {
+    mouseClicked() {
       // console.log('Mouse Pos', mouseX, mouseY);
       // console.log('DOM Pressed', DOMManager.domPressed);
 

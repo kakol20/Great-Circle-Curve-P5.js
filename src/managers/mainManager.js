@@ -34,10 +34,10 @@ const MainManager = (function () {
       ProcessManager.draw(dt);
     },
 
-    mousePressed() {
+    mouseClicked() {
       console.log('Mouse Pressed');
-      DOMManager.mousePressed();
-      ProcessManager.mousePressed();
+      DOMManager.mouseClicked();
+      ProcessManager.mouseClicked();
     }
   }
 })();

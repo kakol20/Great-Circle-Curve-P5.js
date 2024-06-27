@@ -11,5 +11,5 @@ function mousePressed() {
   // MainManager.mousePressed();
 }
 function mouseClicked() {
-  MainManager.mousePressed();
+  MainManager.mouseClicked();
 }

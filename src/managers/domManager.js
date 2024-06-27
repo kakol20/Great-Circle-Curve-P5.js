@@ -34,7 +34,7 @@ const DOMManager = (function () {
       // this.resetButton.touchStarted(() => { ProcessManager.reset(); });
     },
 
-    mousePressed() {
+    mouseClicked() {
       if (mouseX >= this.resetButton.position().x && mouseX <= this.resetButton.position().x + this.resetButton.width &&
         mouseY >= this.resetButton.position().y && mouseY <= this.resetButton.position().y + this.resetButton.height) {
         this.domPressed = true;
