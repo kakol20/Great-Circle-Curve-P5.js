@@ -280,12 +280,12 @@ const ProcessManager = (function () {
     },
 
     mousePressed() {
-      console.log('Mouse Pos', mouseX, mouseY);
-      console.log('DOM Pressed', DOMManager.domPressed);
+      // console.log('Mouse Pos', mouseX, mouseY);
+      // console.log('DOM Pressed', DOMManager.domPressed);
 
       if (!DOMManager.domPressed && mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
         const mouseSpherical = MapToSpherical({ x: mouseX, y: mouseY });
-        console.log(mouseSpherical);
+        // console.log(mouseSpherical);
 
         locSpherical.push(mouseSpherical);
 

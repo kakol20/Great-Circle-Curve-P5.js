@@ -24,11 +24,10 @@ const MainManager = (function () {
       DOMManager.setup();
       ProcessManager.setup();
 
-
-      this.canvas.touchStarted(() => {
-        console.log('Touch Started');
-        this.mousePressed();
-      })
+      // this.canvas.touchStarted(() => {
+      //   // console.log('Touch Started');
+      //   // this.mousePressed();
+      // })
     },
 
     draw(dt) {

@@ -31,7 +31,7 @@ const DOMManager = (function () {
       this.resetButton.position(startX, startY);
 
       this.resetButton.mousePressed(() => { ProcessManager.reset(); });
-      this.resetButton.touchStarted(() => { ProcessManager.reset(); });
+      // this.resetButton.touchStarted(() => { ProcessManager.reset(); });
     },
 
     mousePressed() {
