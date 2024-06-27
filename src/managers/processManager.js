@@ -167,27 +167,27 @@ const ProcessManager = (function () {
   // lat = y axis, lon = x axis
   let locSpherical = [
     {
-      // London Heathrow
+      // London Heathrow - EGLL
       lat: 51.4680 * DegToRad,
       lon: -0.4551 * DegToRad
     },
     {
-      // Leipzig
+      // Leipzig - EDDP
       lat: 51.4187 * DegToRad,
       lon: 12.2342 * DegToRad
     },
     {
-      // Prague
+      // Prague - LKPR
       lat: 50.1018 * DegToRad,
       lon: 14.2632 * DegToRad
     },
     {
-      // Innsbruck
+      // Innsbruck - LOWI
       lat: 47.2576 * DegToRad,
       lon: 11.3513 * DegToRad
     },
     {
-      // Bari
+      // Bari - LIBD
       lat: 41.1375 * DegToRad,
       lon: 16.7652 * DegToRad
     },
