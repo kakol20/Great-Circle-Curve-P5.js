@@ -192,27 +192,27 @@ const ProcessManager = (function () {
       lon: 16.7652 * DegToRad
     },
     {
-      // Muscat
+      // Muscat - OOMS
       lat: 23.6013 * DegToRad,
       lon: 58.2886 * DegToRad
     },
     {
-      // Nagoya
+      // Nagoya - RJGG
       lat: 34.8588 * DegToRad,
       lon: 136.8115 * DegToRad
     },
     {
-      // San Diego
+      // San Diego - KSAN
       lat: 32.7332 * DegToRad,
       lon: -117.1897 * DegToRad
     },
     {
-      // Washington
+      // Washington - KIAD
       lat: 38.9523 * DegToRad,
       lon: -77.4586 * DegToRad
     },
     {
-      // Sint Maarten
+      // Sint Maarten - TNCM
       lat: 18.0442 * DegToRad,
       lon: -63.1134 * DegToRad
     }
