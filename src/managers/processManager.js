@@ -1,7 +1,7 @@
 const ProcessManager = (function () {
   // ----- FUNCTIONS -----
 
-  // https://www.desmos.com/calculator/jhmsnutnai
+  // https://www.desmos.com/calculator/5s7ikac0aq
   function CubicInterpolate(a, b, c, d, t) {
     return b + 0.5 * t * (c - a + t * (2 * a - 5 * b + 4 * c - d + t * (3 * (b - c) + d - a)));
   }
@@ -53,7 +53,7 @@ const ProcessManager = (function () {
     return { x: x, y: y, z: z };
   }
 
-  function CartesionCubic(a, b, c, d, t) {
+  function CartesianCubic(a, b, c, d, t) {
     const x = CubicInterpolate(a.x, b.x, c.x, d.x, t);
     const y = CubicInterpolate(a.y, b.y, c.y, d.y, t);
     const z = CubicInterpolate(a.z, b.z, c.z, d.z, t);
@@ -133,7 +133,7 @@ const ProcessManager = (function () {
     for (let i = 0; i <= segments; i++) {
       const t = i / segments;
 
-      const cartesianPoint = CartesionCubic(a, b, c, d, t);
+      const cartesianPoint = CartesianCubic(a, b, c, d, t);
       const mapPoint = CartesianToMap(cartesianPoint);
 
       // vertex(mapPoint.x, mapPoint.y);
