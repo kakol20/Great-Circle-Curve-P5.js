@@ -242,7 +242,7 @@ const ProcessManager = (function () {
     },
 
     setup() {
-      earthMap.resize(width, height);
+      earthMap.resize(width * pixelDensity(), height * pixelDensity());
 
       for (let i = 0; i < locMercator.length; i++) {
         locMap.push(MercatorToMap(locMercator[i]));
@@ -253,7 +253,7 @@ const ProcessManager = (function () {
     draw(dt) {
       background(0);
 
-      image(earthMap, 0, 0);
+      image(earthMap, 0, 0, width, height);
 
       const loop = DOMManager.loopCheckbox.checked();
       const offset = loop ? 0 : 1;
