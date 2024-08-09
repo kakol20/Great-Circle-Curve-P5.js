@@ -1,15 +1,15 @@
 function preload() {
-  MainManager.preload()
+	MainManager.preload()
 }
 function setup() {
-  MainManager.setup()
+	MainManager.setup()
 }
 function draw() {
-  MainManager.draw(deltaTime / 1000.0)
+	MainManager.draw(deltaTime / 1000.0)
 }
 function mousePressed() {
-  // MainManager.mousePressed();
+	// MainManager.mousePressed();
 }
 function mouseClicked() {
-  MainManager.mouseClicked();
+	MainManager.mouseClicked();
 }
